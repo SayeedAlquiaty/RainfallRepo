@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rainfall", "Rainfall.csproj", "{F6112EE5-B119-43C6-AB58-F39108777206}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6112EE5-B119-43C6-AB58-F39108777206}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6112EE5-B119-43C6-AB58-F39108777206}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6112EE5-B119-43C6-AB58-F39108777206}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6112EE5-B119-43C6-AB58-F39108777206}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1A3DA1B-79F8-4914-BD97-C5E7A0BB2595}
+	EndGlobalSection
+EndGlobal
