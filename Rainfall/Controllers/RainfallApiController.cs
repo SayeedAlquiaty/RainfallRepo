@@ -27,7 +27,8 @@ namespace Rainfall.Controllers
         [HttpGet]
         [Route("/api/v1/rainfall/id/{stationId}/readings")]
         [SwaggerOperation("GetRainfallReadings")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<RainfallReading>), description: "A list of rainfall readings successfully retrieved")]
+        [SwaggerResponse(statusCode: 200, type: typeof(RainfallReadingResponse), description: "A list of rainfall readings successfully retrieved")]
+        [SwaggerResponse(statusCode: 400, type: typeof(ErrorResponse), description: "Invalid request")]
         public virtual IActionResult GetRainfallReadings(string stationId, [FromQuery] int count = 10)
         {
             if (string.IsNullOrEmpty(stationId))
