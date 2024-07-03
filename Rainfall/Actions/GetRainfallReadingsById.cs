@@ -44,19 +44,11 @@ namespace Rainfall.Actions
         }
         public async Task<RainfallReadingResponse> Handle(GetRainfallReadingsReqest request, CancellationToken cancellationToken)
         {
-            //var readings = new List<RainfallReading>
-            //    {
-            //        new RainfallReading { DateMeasured = DateTime.UtcNow, AmountMeasured = 10.5M },
-            //        new RainfallReading { DateMeasured = DateTime.UtcNow.AddDays(-1), AmountMeasured = 5.2M }
-            //    };
-
-            //return Task.FromResult(new RainfallReadingResponse { Readings = readings.Take(request.Count).ToList() });
-
-            var result = await _rainfallService.GetRaifallReadings(request.StationId, request.Count);
+            var result = await _rainfallService.GetRaifallReadings(request.StationId);
 
             var rainfallReadings = new List<RainfallReading>();
 
-            foreach(var item in result?.Items)
+            foreach(var item in result?.Items.Take(request.Count))
             {
                 rainfallReadings.Add(new RainfallReading { DateMeasured = item.DateTime, AmountMeasured = item.Value });
             }
