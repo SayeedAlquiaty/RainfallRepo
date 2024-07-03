@@ -7,6 +7,9 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using Rainfall.Utilities;
+using MediatR;
+using Rainfall.Actions;
 
 namespace Rainfall.Controllers
 {
@@ -16,6 +19,16 @@ namespace Rainfall.Controllers
     [ApiController]
     public class RainfallApiController : ControllerBase
     {
+        private readonly IMediator _mediator;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public RainfallApiController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         /// <summary>
         /// Get rainfall readings by station Id
         /// </summary>
@@ -29,7 +42,7 @@ namespace Rainfall.Controllers
         [SwaggerOperation("GetRainfallReadings")]
         [SwaggerResponse(statusCode: 200, type: typeof(RainfallReadingResponse), description: "A list of rainfall readings successfully retrieved")]
         [SwaggerResponse(statusCode: 400, type: typeof(ErrorResponse), description: "Invalid request")]
-        public virtual IActionResult GetRainfallReadings(string stationId, [FromQuery] int count = 10)
+        public async Task<IActionResult> GetRainfallReadings(string stationId, [FromQuery] int count = 10)
         {
             if (string.IsNullOrEmpty(stationId))
             {
@@ -55,37 +68,8 @@ namespace Rainfall.Controllers
                 });
             }
 
-            // Simulated data for demonstration
-            var readings = new List<RainfallReading>
-            {
-                new RainfallReading { DateMeasured = DateTime.UtcNow, AmountMeasured = 10.5M },
-                new RainfallReading { DateMeasured = DateTime.UtcNow.AddDays(-1), AmountMeasured = 5.2M }
-            };
-
-            return Ok(new RainfallReadingResponse { Readings = readings.Take(count).ToList() });
-        }
-
-        public class RainfallReadingResponse
-        {
-            public List<RainfallReading> Readings { get; set; }
-        }
-
-        public class RainfallReading
-        {
-            public DateTime DateMeasured { get; set; }
-            public decimal AmountMeasured { get; set; }
-        }
-
-        public class ErrorResponse
-        {
-            public string Message { get; set; }
-            public List<ErrorDetail> Detail { get; set; }
-        }
-
-        public class ErrorDetail
-        {
-            public string PropertyName { get; set; }
-            public string Message { get; set; }
+            var readings = await _mediator.Send(new GetRainfallReadingsReqest { Count = count, StationId = stationId });    
+            return Ok(readings);
         }
     }
 }
