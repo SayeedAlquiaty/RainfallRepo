@@ -19,10 +19,11 @@ namespace Rainfall.Utilities
             try
             {
                 // Send a GET request to the specified URL
-                HttpResponseMessage response = client.GetAsync(url).Result;
+                HttpResponseMessage response = await client.GetAsync(url);
 
                 // Ensure the request was successful
                 response.EnsureSuccessStatusCode();
+
                 // Output the response
                 return response;
             }
