@@ -8,8 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Brotli.NET" Version="2.1.1" />
-	  <PackageReference Include="BrotliSharpLib" Version="0.3.3" />
 	  <PackageReference Include="LazyCache.AspNetCore" Version="2.4.0" />
 	  <PackageReference Include="MediatR" Version="12.3.0" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
