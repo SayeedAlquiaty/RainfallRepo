@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Rainfall.Services;
+using System.Collections.Concurrent;
 using System.Diagnostics.Metrics;
 
 namespace Rainfall.Actions
@@ -44,16 +45,17 @@ namespace Rainfall.Actions
         }
         public async Task<RainfallReadingResponse> Handle(GetRainfallReadingsReqest request, CancellationToken cancellationToken)
         {
-            var result = await _rainfallService.GetRaifallReadings(request.StationId);
+            var response = await _rainfallService.GetRaifallReadings(request.StationId);
 
-            var rainfallReadings = new List<RainfallReading>();
+            // A ConcurrentBag to store results
+            ConcurrentBag<RainfallReading> results = new ConcurrentBag<RainfallReading>();
 
-            foreach(var item in result?.Items.Take(request.Count))
+            Parallel.ForEach(response.Items.Take(request.Count), item =>
             {
-                rainfallReadings.Add(new RainfallReading { DateMeasured = item.DateTime, AmountMeasured = item.Value });
-            }
+                results.Add(new RainfallReading { DateMeasured = item.DateTime, AmountMeasured = item.Value });
+            });
 
-            return new RainfallReadingResponse { Readings = rainfallReadings };
+            return new RainfallReadingResponse { Readings = results.ToList() };
         }
     }
 }
