@@ -21,7 +21,7 @@ namespace Rainfall.Services
             string url = "https://environment.data.gov.uk/flood-monitoring/id/stations/" + stationId + "/readings?_sorted&_limit=100";
 
             Func<Task<Response>> rainfallResponseFactory = () => PopulateShowsCache(url);
-            var retVal = await _cache.GetOrAddAsync("Rainfall", rainfallResponseFactory, DateTimeOffset.Now.AddMinutes(15));
+            var retVal = await _cache.GetOrAddAsync("Rainfall"+ stationId, rainfallResponseFactory, DateTimeOffset.Now.AddMinutes(15));
             return retVal;
         }
 
